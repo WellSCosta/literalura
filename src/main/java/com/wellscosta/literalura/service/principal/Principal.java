@@ -12,11 +12,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
-    private Scanner sc = new Scanner(System.in);
-    private ConsumoApi consumoApi = new ConsumoApi();
-    private ConverteDados converteDados = new ConverteDados();
+    private final Scanner sc = new Scanner(System.in);
+    private final ConsumoApi consumoApi = new ConsumoApi();
+    private final ConverteDados converteDados = new ConverteDados();
     private final String ENDERECO = "http://gutendex.com/books/";
-    private LivroRepository repository;
+    private final LivroRepository repository;
 
     public Principal(LivroRepository repository) {
         this.repository = repository;
@@ -73,7 +73,23 @@ public class Principal {
     }
 
     private void listarLivroIdioma() {
+        System.out.println("Insira o idioma para realizar a busca:");
+        System.out.println("""
+                es - espanhol
+                en - inglês
+                fr - francês
+                pt - português""");
+        var idioma = sc.nextLine();
 
+        Optional<List<Livro>> livros = repository.findByIdiomaContainingIgnoreCase(idioma);
+
+        if (livros.isPresent()) {
+            if (!livros.get().isEmpty()) {
+                livros.get().forEach(System.out::println);
+            } else {
+                System.out.println("Não existem livros nesse idioma no banco de dados.");
+            }
+        }
     }
 
     private void listarAutoresVivosEmAno() {
