@@ -15,12 +15,14 @@ public class Livro {
     private String idioma;
     private Integer downloads;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Autor autor;
+
+    public Livro(){}
 
     public Livro(DadosLivros dadosLivros) {
         this.titulo = dadosLivros.titulo();
-        
+
         this.autor = dadosLivros.autor().stream()
                 .map(a -> new Autor(a.nome(), a.nascimento(), a.falecimento())).findFirst()
                 .orElseThrow(NoSuchElementException::new);

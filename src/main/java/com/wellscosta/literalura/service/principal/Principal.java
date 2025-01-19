@@ -81,7 +81,7 @@ public class Principal {
     }
 
     private void listarLivros() {
-
+        repository.findAll().forEach(System.out::println);
     }
 
     private void buscarLivro() {
