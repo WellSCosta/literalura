@@ -1,5 +1,9 @@
 # LiterAlura | Desafio OneNextEducation | Alura
 
+<p align="center" >
+     <img width="400" heigth="400" src="https://github.com/user-attachments/assets/1b617a22-1fb2-4436-9da0-f09597b028b7">
+</p>
+
 Literalura é um software desenvolvido em Java com Spring que faz consultas na API Gutendex, armazena as informações dos livros, autores e idiomas.
 
 ## Funcionalidades
