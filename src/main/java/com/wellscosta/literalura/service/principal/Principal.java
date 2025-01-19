@@ -8,8 +8,8 @@ import com.wellscosta.literalura.repository.LivroRepository;
 import com.wellscosta.literalura.service.ConsumoApi;
 import com.wellscosta.literalura.service.converte.ConverteDados;
 
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner sc = new Scanner(System.in);
@@ -37,33 +37,37 @@ public class Principal {
                     =-=-=-=-=-=-=-=-=-=-=-=-=-=
                     """;
             System.out.println(menu);
-            opcao = sc.nextInt();
-            sc.nextLine();
 
-            switch (opcao) {
-                case 1:
-                    buscarLivro();
-                    break;
-                case 2:
-                    listarLivros();
-                    break;
-                case 3:
-                    listarAutores();
-                    break;
-                case 4:
-                    listarAutoresVivosEmAno();
-                    break;
-                case 5:
-                    listarLivroIdioma();
-                    break;
-                case 0:
-                    System.out.println("Saindo...");
-                    break;
-                default:
-                    System.out.println("Opção Inválida!");
-                    break;
+            try {
+                opcao = sc.nextInt();
+                sc.nextLine();
+
+                switch (opcao) {
+                    case 1:
+                        buscarLivro();
+                        break;
+                    case 2:
+                        listarLivros();
+                        break;
+                    case 3:
+                        listarAutores();
+                        break;
+                    case 4:
+                        listarAutoresVivosEmAno();
+                        break;
+                    case 5:
+                        listarLivroIdioma();
+                        break;
+                    case 0:
+                        System.out.println("Saindo...");
+                        break;
+                    default:
+                        System.out.println("Opção Inválida!");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opção Inválida!");
             }
-
         } while (opcao != 0);
 
     }
@@ -73,11 +77,17 @@ public class Principal {
     }
 
     private void listarAutoresVivosEmAno() {
-
+        System.out.print("Digite o ano que deseja pesquisar: ");
+        var ano = sc.nextInt();
+        sc.nextLine();
+        repository.obterAutorPorAno(ano).forEach(System.out::println);
     }
 
     private void listarAutores() {
-
+        repository.findAll().stream()
+                .map(Livro::getAutor)
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
     }
 
     private void listarLivros() {
